@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  mysimplewebapi:
+    image: mysimplewebapi
+    depends_on:
+      - "postgres_image"
+    build:
+      context: ./MySimpleWebApi
+      dockerfile: Dockerfile
+    environment:
+      DB_CONNECTION_STRING: "host=postgres_image;port=5432;database=values_db;username=dbuser;password=dbpwd"
+  
+  postgres_image:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "dbuser"
+      POSTGRES_PASSWORD: "dbpwd"
+      POSTGRES_DB: "values_db"
